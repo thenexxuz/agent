@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Agent;
+namespace Thenexxuz\Agent;
 
 use BadMethodCallException;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
@@ -13,6 +13,13 @@ class Agent extends Mobile_Detect
      * @var array
      */
     protected static $desktopDevices = [
+        'HUAWEI' => 'HUAWEI',
+        'HONOR' => 'HONOR',
+        'vivo' => 'vivo [\w+]',
+        'OPPO' => 'OPPO [\w+]',
+        'Redmi' => 'Redmi [\w+]',
+        'MI' => 'MI [\w+]',
+        'Samsung' => 'SM-?[\w+]',
         'Macintosh' => 'Macintosh',
     ];
 
@@ -37,10 +44,16 @@ class Agent extends Mobile_Detect
      * @var array
      */
     protected static $additionalBrowsers = [
+        'MicroMessenger' => 'MicroMessenger',
+        'QQ' => 'QQ/[.0-9]+',
+        'Weibo' => 'Weibo',
+        'Alipay' => 'AliApp\(AP/[.0-9]+\)',
+        'Taobao' => 'AliApp\(TB/[.0-9]+\)',
         'Opera Mini' => 'Opera Mini',
         'Opera' => 'Opera|OPR',
         'Edge' => 'Edge',
         'UCBrowser' => 'UCBrowser',
+        'YandexBrowser' => 'YaBrowser',
         'Vivaldi' => 'Vivaldi',
         'Chrome' => 'Chrome',
         'Firefox' => 'Firefox',
@@ -71,6 +84,12 @@ class Agent extends Mobile_Detect
         'IE' => ['IEMobile/[VER];', 'IEMobile [VER]', 'MSIE [VER];', 'rv:[VER]'],
         'Edge' => 'Edge/[VER]',
         'Vivaldi' => 'Vivaldi/[VER]',
+        'YandexBrowser' => 'YaBrowser/[VER]',
+        'MicroMessenger' => 'MicroMessenger/[VER]',
+        'QQ' => 'QQ/[VER]',
+        'Weibo' => 'weibo__[VER]__(iphone|android)__[\w+]',
+        'Alipay' => 'AliApp\(AP/[VER]\)',
+        'Taobao' => 'AliApp\(TB/[VER]\)',
     ];
 
     /**
@@ -297,6 +316,27 @@ class Agent extends Mobile_Detect
     public function isRobot($userAgent = null)
     {
         return $this->getCrawlerDetect()->isCrawler($userAgent ?: $this->userAgent);
+    }
+    
+    /**
+     * Get the device type
+     * @param null $userAgent
+     * @param null $httpHeaders
+     * @return string
+     */
+    public function deviceType($userAgent = null, $httpHeaders = null)
+    {
+        if ($this->isDesktop($userAgent, $httpHeaders)) {
+            return "desktop";
+        } elseif ($this->isPhone($userAgent, $httpHeaders)) {
+            return "phone";
+        } elseif ($this->isTablet($userAgent, $httpHeaders)) {
+            return "tablet";
+        } elseif ($this->isRobot($userAgent)) {
+            return "robot";
+        }
+
+        return "other";
     }
 
     public function version($propertyName, $type = self::VERSION_TYPE_STRING)

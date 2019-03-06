@@ -1,13 +1,13 @@
 {
-    "name": "jenssegers/agent",
+    "name": "thenexxuz/agent",
     "description": "Desktop/mobile user agent parser with support for Laravel, based on Mobiledetect",
     "keywords": ["laravel", "useragent", "agent", "user agent", "browser", "platform", "mobile", "desktop"],
-    "homepage": "https://github.com/jenssegers/agent",
+    "homepage": "https://github.com/thenexxuz/agent",
     "license" : "MIT",
     "authors": [
         {
-            "name": "Jens Segers",
-            "homepage": "https://jenssegers.com"
+            "name": "William Penton",
+            "homepage": "https://penton.us"
         }
     ],
     "require": {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jenssegers\\Agent\\": "src/"
+            "Thenexxuz\\Agent\\": "src/"
         }
     },
     "extra": {
@@ -30,10 +30,10 @@
         },
         "laravel": {
             "providers": [
-                "Jenssegers\\Agent\\AgentServiceProvider"
+                "Thenexxuz\\Agent\\AgentServiceProvider"
             ],
             "aliases": {
-                "Agent": "Jenssegers\\Agent\\Facades\\Agent"
+                "Agent": "Thenexxuz\\Agent\\Facades\\Agent"
             }
         }
     },
