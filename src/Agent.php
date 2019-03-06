@@ -19,8 +19,15 @@ class Agent extends Mobile_Detect
         'OPPO' => 'OPPO [\w+]',
         'Redmi' => 'Redmi [\w+]',
         'MI' => 'MI [\w+]',
-        'Samsung' => 'SM-?[\w+]',
         'Macintosh' => 'Macintosh',
+    ];
+
+    /**
+     * List of known tablet devices.
+     * @var array
+     */
+    protected static  $additionalTabletDevices = [
+        'Samsung' => 'SM-T385',
     ];
 
     /**
@@ -105,7 +112,6 @@ class Agent extends Mobile_Detect
     public static function getDetectionRulesExtended()
     {
         static $rules;
-
         if (!$rules) {
             $rules = static::mergeRules(
                 static::$desktopDevices, // NEW
@@ -295,6 +301,36 @@ class Agent extends Mobile_Detect
     }
 
     /**
+     * Check if the device is a tablet.
+     * Return true if any type of tablet device is detected.
+     *
+     * @param  string $userAgent   deprecated
+     * @param  array  $httpHeaders deprecated
+     * @return bool
+     */
+    public function isTablet($userAgent = null, $httpHeaders = null)
+    {
+        // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
+        if ($this->getUserAgent() === 'Amazon CloudFront') {
+            $cfHeaders = $this->getCfHeaders();
+            if(array_key_exists('HTTP_CLOUDFRONT_IS_TABLET_VIEWER', $cfHeaders) && $cfHeaders['HTTP_CLOUDFRONT_IS_TABLET_VIEWER'] === 'true') {
+                return true;
+            }
+        }
+
+        $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
+        $tablets = array_merge(static::$tabletDevices, static::$additionalTabletDevices);
+
+        foreach ($tablets as $_regex) {
+            if ($this->match($_regex, $userAgent)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get the robot name.
      * @param  string|null $userAgent
      * @return string|bool
@@ -317,7 +353,7 @@ class Agent extends Mobile_Detect
     {
         return $this->getCrawlerDetect()->isCrawler($userAgent ?: $this->userAgent);
     }
-    
+
     /**
      * Get the device type
      * @param null $userAgent
