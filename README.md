@@ -15,7 +15,7 @@ Installation
 Install using composer:
 
 ```bash
-composer require jenssegers/agent
+composer require thenexxuz/agent
 ```
 
 Laravel (optional)
@@ -24,13 +24,13 @@ Laravel (optional)
 Add the service provider in `config/app.php`:
 
 ```php
-Jenssegers\Agent\AgentServiceProvider::class,
+Thenexxuz\Agent\AgentServiceProvider::class,
 ```
 
 And add the Agent alias to `config/app.php`:
 
 ```php
-'Agent' => Jenssegers\Agent\Facades\Agent::class,
+'Agent' => Thenexxuz\Agent\Facades\Agent::class,
 ```
 
 Basic Usage
@@ -39,7 +39,7 @@ Basic Usage
 Start by creating an `Agent` instance (or use the `Agent` Facade if you are using Laravel):
 
 ```php
-use Jenssegers\Agent\Agent;
+use Thenexxuz\Agent\Agent;
 
 $agent = new Agent();
 ```

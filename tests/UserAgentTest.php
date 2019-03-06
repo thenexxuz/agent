@@ -2,7 +2,7 @@
 
 require __DIR__.'/../vendor/mobiledetect/mobiledetectlib/tests/UserAgentTest.php';
 
-use Jenssegers\Agent\Agent;
+use Thenexxuz\Agent\Agent;
 
 class UserAgentTestExtended extends UserAgentTest
 {
