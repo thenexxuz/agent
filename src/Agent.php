@@ -41,6 +41,7 @@ class Agent extends Mobile_Detect
         'Opera' => 'Opera|OPR',
         'Edge' => 'Edge',
         'UCBrowser' => 'UCBrowser',
+        'YandexBrowser' => 'YaBrowser',
         'Vivaldi' => 'Vivaldi',
         'Chrome' => 'Chrome',
         'Firefox' => 'Firefox',
@@ -71,6 +72,7 @@ class Agent extends Mobile_Detect
         'IE' => ['IEMobile/[VER];', 'IEMobile [VER]', 'MSIE [VER];', 'rv:[VER]'],
         'Edge' => 'Edge/[VER]',
         'Vivaldi' => 'Vivaldi/[VER]',
+        'YandexBrowser' => 'YaBrowser/[VER]',
     ];
 
     /**
